@@ -3,8 +3,6 @@
 void setup_robot(struct Robot *robot){
     robot->x = OVERALL_WINDOW_WIDTH/2-50;
     robot->y = OVERALL_WINDOW_HEIGHT-50;
-    robot->a = OVERALL_WINDOW_WIDTH/2-50;
-    robot->b = OVERALL_WINDOW_HEIGHT-50;
     robot->true_x = OVERALL_WINDOW_WIDTH/2-50;
     robot->true_y = OVERALL_WINDOW_HEIGHT-50;
     robot->width = ROBOT_WIDTH;
@@ -14,6 +12,10 @@ void setup_robot(struct Robot *robot){
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
+
+    robot->a = 0;
+    robot->b = 0;
+    robot->turned = 0;
 
     printf("Press arrow keys to move manually, or enter to move automatically\n\n");
 }
@@ -269,40 +271,32 @@ void robotMotorMove(struct Robot * robot) {
 
 void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor) {
 
+
     if ((front_left_sensor == 0) && (front_right_sensor == 0)) {
-        if (robot->currentSpeed<2)
+        if (robot->currentSpeed<4){
             robot->direction = UP;
+        }
     }
     else if ((robot->currentSpeed>0) && ((front_left_sensor == 1) || (front_right_sensor == 1)) ) {
         robot->direction = DOWN;
     }
     else if ((robot->currentSpeed==0) && ((front_left_sensor == 1) || (front_right_sensor == 1)) ) {
-        if (robot->angle == 0 || robot->angle == 180) {
-            if (abs(robot->b-robot->y) < 50) {
-                robot->direction = LEFT;
-                robot->direction = LEFT;
-                robot->a = 0;
-                robot->b = 0;
-            }
-            else {
-                robot->direction = LEFT;
-                robot->a = robot->x;
-                robot->b = robot->y;
-            }
+
+        if ( (robot->turned==1) && ((abs(robot->a - robot->x)>50) || (abs(robot->b - robot->y)>50)) ){
+            robot->turned = 0;
         }
-        else if (robot->angle == 90 || robot->angle == 270) {
-            if (abs(robot->a-robot->x) < 50) {
-                robot->direction = DOWN;
-                robot->a = 0;
-                robot->b = 0;
-            }
-            else {
-                robot->direction = LEFT;
-                robot->a = robot->x;
-                robot->b = robot->y;
-            }
+        else if ( (robot->turned==1) && ((abs(robot->a - robot->x)<50) || (abs(robot->b - robot->y)<50)) ) {
+            robot->direction = RIGHT;
+        }
+
+        else if ( (robot->turned==0) && ((abs(robot->a - robot->x)>50) || (abs(robot->b - robot->y)>50)) ) {
+            robot->direction = LEFT;
+            robot->a = robot->x;
+            robot->b = robot->y;
+            robot->turned = 1;
         }
     }
+
     else if ((robot->currentSpeed==0) && ((front_left_sensor == 1) || (front_right_sensor == 0)) ) {
         robot->direction = RIGHT;
     }
