@@ -14,7 +14,7 @@
 
 #define WALL_WIDTH 10
 
-#define DEFAULT_ANGLE_CHANGE 15
+#define DEFAULT_ANGLE_CHANGE 90
 #define DEFAULT_SPEED_CHANGE 1
 #define MAX_ROBOT_SPEED 25
 #define PI 3.14159265
@@ -33,6 +33,7 @@ struct Wall_collection {
 
 struct Robot {
     int x, y;
+    int a, b;
     double true_x, true_y;
     int direction;
     int angle;
