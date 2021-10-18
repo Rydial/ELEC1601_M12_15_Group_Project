@@ -27,6 +27,7 @@ int checkRobotSensor(int x, int y, int sensorSensitivityLength, struct Wall * wa
 int checkRobotSensorFrontRightAllWalls(struct Robot * robot, struct Wall_collection * head);
 int checkRobotSensorFrontLeftAllWalls(struct Robot * robot, struct Wall_collection * head);
 int checkRobotSensorLeftAllWalls(struct Robot * robot, struct Wall_collection * head);
+int checkRobotSensorRightAllWalls(struct Robot * robot, struct Wall_collection * head);
 
 //Visual Display
 void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot);

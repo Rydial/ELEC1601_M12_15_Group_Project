@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     struct Robot robot;
     struct Wall_collection *head = NULL;
     int front_left_sensor, front_right_sensor=0;
-    int left_sensor=0;
+    int left_sensor, right_sensor=0;
     clock_t start_time, end_time;
     int msec;
 
@@ -82,6 +82,10 @@ int main(int argc, char *argv[]) {
             left_sensor = checkRobotSensorLeftAllWalls(&robot, head);
             if (left_sensor>0)
                 printf("Getting close on the left. Score = %d\n", left_sensor);
+
+            right_sensor = checkRobotSensorRightAllWalls(&robot, head);
+            if (right_sensor>0)
+                printf("Getting close on the right. Score = %d\n", right_sensor);
         }
         robotUpdate(renderer, &robot);
         updateAllWalls(head, renderer);
