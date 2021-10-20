@@ -148,7 +148,106 @@ int checkRobotSensorFrontLeftAllWalls(struct Robot * robot, struct Wall_collecti
     return score;
 }
 
-void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
+int checkRobotSensorLeftAllWalls(struct Robot * robot, struct Wall_collection * head) {
+    struct Wall_collection *ptr, *head_store;
+    int i;
+    double xDir, yDir;
+    int robotCentreX, robotCentreY, xTL, yTL;
+    int score, hit;
+    int sensorSensitivityLength;
+
+    head_store = head;
+    robotCentreX = robot->x+ROBOT_WIDTH/2;
+    robotCentreY = robot->y+ROBOT_HEIGHT/2;
+    score = 0;
+    sensorSensitivityLength =  floor(SENSOR_VISION/5);
+
+    for (i = 0; i < 5; i++)
+    {
+        ptr = head_store;
+        xDir = round(robotCentreX+(-ROBOT_WIDTH/2)*cos((robot->angle-90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle-90)*PI/180));
+        yDir = round(robotCentreY+(-ROBOT_WIDTH/2)*sin((robot->angle-90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*cos((robot->angle-90)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+        hit = 0;
+
+        while(ptr != NULL) {
+            hit = (hit || checkRobotSensor(xTL, yTL, sensorSensitivityLength, &ptr->wall));
+            ptr = ptr->next;
+        }
+        if (hit)
+            score = i;
+    }
+    return score;
+}
+
+int checkRobotSensorRightAllWalls(struct Robot * robot, struct Wall_collection * head) {
+    struct Wall_collection *ptr, *head_store;
+    int i;
+    double xDir, yDir;
+    int robotCentreX, robotCentreY, xTL, yTL;
+    int score, hit;
+    int sensorSensitivityLength;
+
+    head_store = head;
+    robotCentreX = robot->x+ROBOT_WIDTH/2;
+    robotCentreY = robot->y+ROBOT_HEIGHT/2;
+    score = 0;
+    sensorSensitivityLength =  floor(SENSOR_VISION/5);
+
+    for (i = 0; i < 5; i++)
+    {
+        ptr = head_store;
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle+80)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle+80)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle+80)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*cos((robot->angle+80)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+        hit = 0;
+
+        while(ptr != NULL) {
+            hit = (hit || checkRobotSensor(xTL, yTL, sensorSensitivityLength, &ptr->wall));
+            ptr = ptr->next;
+        }
+        if (hit)
+            score = i;
+    }
+    return score;
+}
+
+int checkRobotIRSensorRight(struct Robot * robot, struct Wall_collection * head) {
+    struct Wall_collection *ptr, *head_store;
+    int i;
+    double xDir, yDir;
+    int robotCentreX, robotCentreY, xTL, yTL;
+    int score, hit;
+    int sensorSensitivityLength;
+
+    head_store = head;
+    robotCentreX = robot->x+ROBOT_WIDTH/2;
+    robotCentreY = robot->y+ROBOT_HEIGHT/2;
+    score = 0;
+    sensorSensitivityLength =  floor(SENSOR_VISION/5);
+
+    for (i = 0; i < 50; i++)
+    {
+        ptr = head_store;
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle+85)*PI/180)-(-ROBOT_HEIGHT/2-300+sensorSensitivityLength*i)*sin((robot->angle+85)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle+85)*PI/180)+(-ROBOT_HEIGHT/2-300+sensorSensitivityLength*i)*cos((robot->angle+85)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+        hit = 0;
+
+        while(ptr != NULL) {
+            hit = (hit || checkRobotSensor(xTL, yTL, sensorSensitivityLength, &ptr->wall));
+            ptr = ptr->next;
+        }
+        if (hit)
+            score = i;
+    }
+    return score;
+}
+
+void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot, int right_ir_sensor){
     double xDir, yDir;
 
     int robotCentreX, robotCentreY, xTR, yTR, xTL, yTL, xBR, yBR, xBL, yBL;
@@ -230,6 +329,50 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
         SDL_SetRenderDrawColor(renderer, 80+(20*(5-i)), 80+(20*(5-i)), 80+(20*(5-i)), 255);
         SDL_RenderDrawRect(renderer, &rect);
         SDL_RenderFillRect(renderer, &rect);
+    }
+
+    //Left Sensor
+    for (i = 0; i < 5; i++)
+    {
+        xDir = round(robotCentreX+(-ROBOT_WIDTH/2)*cos((robot->angle-90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*sin((robot->angle-90)*PI/180));
+        yDir = round(robotCentreY+(-ROBOT_WIDTH/2)*sin((robot->angle-90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*cos((robot->angle-90)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+
+        SDL_Rect rect = {xTL, yTL, 2, sensor_sensitivity};
+        SDL_SetRenderDrawColor(renderer, 80+(20*(5-i)), 80+(20*(5-i)), 80+(20*(5-i)), 255);
+        SDL_RenderDrawRect(renderer, &rect);
+        SDL_RenderFillRect(renderer, &rect);
+    }
+
+    //Right Sensor
+    for (i = 0; i < 5; i++)
+    {
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle+90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*sin((robot->angle+90)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle+90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensor_sensitivity*i)*cos((robot->angle+90)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+
+        SDL_Rect rect = {xTL, yTL, 2, sensor_sensitivity};
+        SDL_SetRenderDrawColor(renderer, 80+(20*(5-i)), 80+(20*(5-i)), 80+(20*(5-i)), 255);
+        SDL_RenderDrawRect(renderer, &rect);
+        SDL_RenderFillRect(renderer, &rect);
+    }
+
+    //Right IR Sensor
+    for (i = 0; i < (50-right_ir_sensor); i++)
+    {
+        xDir = round(robotCentreX+(ROBOT_WIDTH/2)*cos((robot->angle+89)*PI/180)-(-ROBOT_HEIGHT/2-((50-right_ir_sensor)*6)+sensor_sensitivity*i)*sin((robot->angle+89)*PI/180));
+        yDir = round(robotCentreY+(ROBOT_WIDTH/2)*sin((robot->angle+89)*PI/180)+(-ROBOT_HEIGHT/2-((50-right_ir_sensor)*6)+sensor_sensitivity*i)*cos((robot->angle+89)*PI/180));
+        xTL = (int) xDir;
+        yTL = (int) yDir;
+
+        int colour_incr = round(255/(50-right_ir_sensor));
+        SDL_Rect rect = {xTL, yTL, 2, sensor_sensitivity};
+        SDL_SetRenderDrawColor(renderer, 255-(i*colour_incr), 255-(i*colour_incr), 255-(i*colour_incr), 255);
+        SDL_RenderDrawRect(renderer, &rect);
+        SDL_RenderFillRect(renderer, &rect);
+
     }
 }
 
