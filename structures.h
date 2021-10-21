@@ -20,6 +20,7 @@
 #define PI 3.14159265
 #define SENSOR_VISION 30
 
+
 struct Wall {
     int x,y;
     int width, height;
@@ -31,9 +32,13 @@ struct Wall_collection {
     struct Wall_collection *next;
 };
 
+typedef struct RobotMove {
+    int x, y;
+    int left, right;
+} RM;
+
 struct Robot {
-    int x, y, a, b;
-    int turned;
+    int x, y;
     double true_x, true_y;
     int direction;
     int angle;
@@ -41,6 +46,14 @@ struct Robot {
     int width, height;
     int crashed;
     int auto_mode;
+
+    /* First Algorithm */
+    // int arr_size;
+    // RM *history;
+
+    /* Second Algorithm */
+    int searchWall;
+    int ridingWall;
 };
 
 #endif // STRUCTURES_H_INCLUDED
