@@ -14,11 +14,12 @@
 
 #define WALL_WIDTH 10
 
-#define DEFAULT_ANGLE_CHANGE 90
+#define DEFAULT_ANGLE_CHANGE 10
 #define DEFAULT_SPEED_CHANGE 2
 #define MAX_ROBOT_SPEED 25
 #define PI 3.14159265
 #define SENSOR_VISION 30
+
 
 struct Wall {
     int x,y;
@@ -31,9 +32,13 @@ struct Wall_collection {
     struct Wall_collection *next;
 };
 
+typedef struct RobotMove {
+    int x, y;
+    int left, right;
+} RM;
+
 struct Robot {
-    int x, y, a, b;
-    int turned;
+    int x, y;
     double true_x, true_y;
     int direction;
     int angle;
@@ -41,6 +46,14 @@ struct Robot {
     int width, height;
     int crashed;
     int auto_mode;
+
+    /* First Algorithm */
+    // int arr_size;
+    // RM *history;
+
+    /* Second Algorithm */
+    int searchWall;
+    int ridingWall;
 };
 
 #endif // STRUCTURES_H_INCLUDED
