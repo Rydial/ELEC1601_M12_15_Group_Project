@@ -161,7 +161,7 @@ int checkRobotSensorFrontLeftAllWalls(struct Robot * robot, struct Wall_collecti
     return score;
 }
 
-int checkRobotSensorRightTopAllWalls(struct Robot * robot, struct Wall_collection * head) {
+int checkRobotSensorRightAllWalls(struct Robot * robot, struct Wall_collection * head) {
     struct Wall_collection *ptr, *head_store;
     int i;
     double xDir, yDir;
@@ -197,7 +197,7 @@ int checkRobotSensorRightTopAllWalls(struct Robot * robot, struct Wall_collectio
     return score;
 }
 
-int checkRobotSensorRightBtmAllWalls(struct Robot * robot, struct Wall_collection * head) {
+int checkRobotSensorFrontMidAllWalls(struct Robot * robot, struct Wall_collection * head) {
     struct Wall_collection *ptr, *head_store;
     int i;
     double xDir, yDir;
@@ -441,9 +441,9 @@ void robotMotorMove(struct Robot * robot) {
 
 // }
 
-void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor, int right_top_sensor, int right_btm_sensor) {
+void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor, int right_sensor, int front_mid_sensor) {
 
-    printf("Front_Left: %d   Front_right: %d    Right: %d   Mid: %d\n", front_left_sensor, front_right_sensor, right_top_sensor, right_btm_sensor);
+    printf("Front_Left: %d   Front_right: %d    Right: %d   Mid: %d\n", front_left_sensor, front_right_sensor, right_sensor, front_mid_sensor);
     printf("Current speed: %d       Riding: %d \n", robot->currentSpeed, robot->ridingWall);
 
 
@@ -456,7 +456,7 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
                 robot->direction = RIGHT;
         }
 
-    if (robot->ridingWall == 1 && right_top_sensor == 0) {
+    if (robot->ridingWall == 1 && right_sensor == 0) {
             if (robot->currentSpeed > 2)
                 robot->direction = DOWN;
             else
@@ -464,17 +464,17 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
         }
     }
 
-    if (right_top_sensor < 3 && robot->ridingWall == 1)
+    if (right_sensor < 3 && robot->ridingWall == 1)
         robot->direction = RIGHT;
 
-    if (right_top_sensor == 3 || front_right_sensor > 1) {
-        if (right_top_sensor == 3)
+    if (right_sensor == 3 || front_right_sensor > 1) {
+        if (right_sensor == 3)
             robot->ridingWall = 1;
 
         if (front_left_sensor == 0) {
             if (robot->currentSpeed < 4)
                 robot->direction = UP;
-        } else if (front_left_sensor > 2 && right_top_sensor < 1) { // front left sensor > 2
+        } else if (front_left_sensor > 2 && right_sensor < 1) { // front left sensor > 2
             if (robot->currentSpeed > 0)
                 robot->direction = DOWN;
             else
@@ -494,7 +494,7 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
             robot->currentSpeed = 2;
     }
 
-    if (front_right_sensor == 4 || right_top_sensor == 4) {
+    if (front_right_sensor == 4 || right_sensor == 4) {
         robot->currentSpeed = 0;
         robot->direction = LEFT;
     }
@@ -506,7 +506,7 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
             robot->direction = RIGHT;
     }
 
-    if (right_btm_sensor == 4) {
+    if (front_mid_sensor == 4) {
         robot->currentSpeed = 0;
         robot->direction = LEFT;
     }

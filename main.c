@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 
     struct Robot robot;
     struct Wall_collection *head = NULL;
-    int front_left_sensor=0, front_right_sensor=0, right_top_sensor=0, right_btm_sensor=0;
+    int front_left_sensor=0, front_right_sensor=0, right_sensor=0, front_mid_sensor=0;
     clock_t start_time, end_time;
     int msec;
 
@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
 
         //Move robot based on user input commands/auto commands
         if (robot.auto_mode == 1)
-            robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, right_top_sensor, right_btm_sensor);
+            robotAutoMotorMove(&robot, front_left_sensor, front_right_sensor, right_sensor, front_mid_sensor);
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
@@ -94,9 +94,9 @@ int main(int argc, char *argv[]) {
             // if (front_right_sensor>0)
             //     printf("Getting close on the right. Score = %d\n", front_right_sensor);
 
-            right_top_sensor = checkRobotSensorRightTopAllWalls(&robot, head);
+            right_sensor = checkRobotSensorRightAllWalls(&robot, head);
 
-            right_btm_sensor = checkRobotSensorRightBtmAllWalls(&robot, head);
+            front_mid_sensor = checkRobotSensorFrontMidAllWalls(&robot, head);
         }
         robotUpdate(renderer, &robot);
         updateAllWalls(head, renderer);
