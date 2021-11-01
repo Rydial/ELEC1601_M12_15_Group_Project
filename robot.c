@@ -1,10 +1,10 @@
 #include "robot.h"
 
 void setup_robot(struct Robot *robot){
-    robot->x = OVERALL_WINDOW_WIDTH/5+70;
-    robot->y = OVERALL_WINDOW_HEIGHT-30;
-    robot->true_x = OVERALL_WINDOW_WIDTH/5+70;
-    robot->true_y = OVERALL_WINDOW_HEIGHT-30;
+    robot->x = 30;
+    robot->y = 180;
+    robot->true_x = 30;
+    robot->true_y = 180;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
@@ -67,6 +67,7 @@ void robotCrash(struct Robot * robot) {
     if (!robot->crashed)
         printf("Ouchies!!!!!\n\nPress space to start again\n");
     robot->crashed = 1;
+    robot->auto_mode = 0;
 }
 
 void robotSuccess(struct Robot * robot, int msec) {
@@ -77,6 +78,7 @@ void robotSuccess(struct Robot * robot, int msec) {
         printf("Press space to start again\n");
     }
     robot->crashed = 1;
+    robot->auto_mode = 0;
 }
 
 int checkRobotSensor(int x, int y, int width, int height, struct Wall * wall)  {
@@ -397,7 +399,7 @@ void robotMotorMove(struct Robot * robot) {
 
 void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_right_sensor, int right_sensor, int front_mid_sensor) {
 
-    //printf("Front_Left: %d   Front_right: %d    Right: %d   Mid: %d\n", front_left_sensor, front_right_sensor, right_sensor, front_mid_sensor);
+    printf("Front_Left: %d   Front_right: %d    Right: %d   Mid: %d\n", front_left_sensor, front_right_sensor, right_sensor, front_mid_sensor);
     //printf("Current speed: %d       Riding: %d \n", robot->currentSpeed, robot->ridingWall);
 
 
@@ -429,7 +431,7 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
         }
         if (right_sensor >= 3) {
             if (front_left_sensor < 3 && front_right_sensor < 4 && front_mid_sensor < 3) {
-                if (robot->currentSpeed < 2)
+                if (robot->currentSpeed < 3)
                     robot->direction = UP;
             }
         }
