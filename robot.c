@@ -1,18 +1,17 @@
 #include "robot.h"
 
 void setup_robot(struct Robot *robot){
-    robot->x = OVERALL_WINDOW_WIDTH/2-50;
-    robot->y = OVERALL_WINDOW_HEIGHT-50;
-    robot->true_x = OVERALL_WINDOW_WIDTH/2-50;
-    robot->true_y = OVERALL_WINDOW_HEIGHT-50;
+    robot->x = OVERALL_WINDOW_WIDTH/2-10;
+    robot->y = OVERALL_WINDOW_HEIGHT/2-10;
+    robot->true_x = OVERALL_WINDOW_WIDTH/2-10;
+    robot->true_y = OVERALL_WINDOW_HEIGHT/2-10;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
-    robot->angle = 0;
+    robot->angle = 90;
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
-
 
     /* First Algorithm */
     // robot->history = malloc(0);
@@ -447,7 +446,72 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
     printf("Current speed: %d       Riding: %d \n", robot->currentSpeed, robot->ridingWall);
 
 
+    // initial search algorithm
+    if (robot->ridingWall == 0) {
+        if (robot->searchWall == 0) {
+            robot->direction = RIGHT;
+            robot->searchWall = 1;
+        } else {
+            if (robot->currentSpeed < 4)
+                robot->direction = UP;
+        }
+    }
+    // initial wall found on left or front
+    if (robot->ridingWall == 0 && (front_left_sensor || front_mid_sensor))
+        robot->direction = LEFT;
+    // initial wall found on right
+    if (front_right_sensor || right_sensor)
+        robot->ridingWall = 1;
 
+
+    // tracking right sensor
+    if (robot->ridingWall) {
+        if (right_sensor < 3 && front_right_sensor < 3) {
+            if (robot->currentSpeed < 2)
+                robot->direction = UP;
+            else
+                robot->direction = RIGHT;
+        }
+        if (right_sensor >= 3) {
+            if (front_left_sensor < 3 && front_right_sensor < 4 && front_mid_sensor < 3) {
+                if (robot->currentSpeed < 2)
+                    robot->direction = UP;
+            }
+        }
+    }
+
+    // during navigation: other sensors maintain safety distance of 3 (except right sensor), emergency distance of 4
+    if (front_left_sensor == 3 || front_right_sensor == 3 || front_mid_sensor == 3) {
+        if (robot->currentSpeed < 2)
+            robot->direction = UP;
+        if (robot->currentSpeed > 2)
+            robot->direction = DOWN;
+    }
+
+    if (front_left_sensor == 4 && front_right_sensor < 4)
+        robot->direction = RIGHT;
+
+    if (front_right_sensor == 3 && front_left_sensor < 1)
+        robot->direction = LEFT;
+    //if (right_sensor == 4 && front_right_sensor < 2 && front_left_sensor < 2) {
+        //if (robot->currentSpeed > 0)
+            //robot->direction = RIGHT;
+    //}
+    if (front_right_sensor == 4 || front_mid_sensor == 4)
+        robot->direction = LEFT;
+
+    if (front_left_sensor == 4 || front_right_sensor == 4 || front_mid_sensor == 4)
+        if (robot->currentSpeed > 0)
+            robot->direction = DOWN;
+
+
+    printf("Direction: %d\n\n", robot->direction);
+
+
+
+    /*
+
+    /////////////////////////////////////////////////////////////////////////////////////////
     if (front_right_sensor < 3) {
         if (robot->ridingWall == 0) {
             if (robot->currentSpeed < 4)
@@ -456,12 +520,12 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
                 robot->direction = RIGHT;
         }
 
-    if (robot->ridingWall == 1 && right_sensor == 0) {
-            if (robot->currentSpeed > 2)
-                robot->direction = DOWN;
-            else
-                robot->direction = RIGHT;
-        }
+        if (robot->ridingWall == 1 && right_sensor == 0) {
+                if (robot->currentSpeed > 2)
+                    robot->direction = DOWN;
+                else
+                    robot->direction = RIGHT;
+            }
     }
 
     if (right_sensor < 3 && robot->ridingWall == 1)
@@ -511,7 +575,7 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
         robot->direction = LEFT;
     }
 
-    printf("Direction: %d\n\n", robot->direction);
+
     /*
     // turn on riding wall: right top or bottom sensor detects wall
     if (right_btm_sensor >= 3)
