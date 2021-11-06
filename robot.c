@@ -2,18 +2,19 @@
 
 void setup_robot(struct Robot *robot){
 
-
-    robot->x = 0;
-    robot->y = 40;
-    robot->true_x = 0;
-    robot->true_y = 40;
+    robot->x = 170;
+    robot->y = 460;
+    robot->true_x = 170;
+    robot->true_y = 460;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
-    robot->angle = 270;
+    robot->angle = 0;
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
+
+
 
     /* Initializing Variables */
     robot->searchWall = 0;
@@ -403,9 +404,9 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
 
     // initial search algorithm
     if (robot->ridingWall == 0) {
-        if (robot->searchWall == 0) {
+        if (robot->searchWall < 3) {
             robot->direction = RIGHT;
-            robot->searchWall = 1;
+            robot->searchWall += 1;
         } else {
             if (robot->currentSpeed < 4)
                 robot->direction = UP;
