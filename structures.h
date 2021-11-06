@@ -47,11 +47,7 @@ struct Robot {
     int crashed;
     int auto_mode;
 
-    /* First Algorithm */
-    // int arr_size;
-    // RM *history;
-
-    /* Second Algorithm */
+    /* New variables */
     int searchWall;
     int ridingWall;
 };

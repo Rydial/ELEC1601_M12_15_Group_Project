@@ -48,67 +48,70 @@ int main(int argc, char *argv[]) {
     insertAndSetFirstWall(&head, 11,  OVERALL_WINDOW_WIDTH/2+100, OVERALL_WINDOW_HEIGHT/2+200, OVERALL_WINDOW_WIDTH/2-100, 10);
     insertAndSetFirstWall(&head, 12,  OVERALL_WINDOW_WIDTH/2+200, OVERALL_WINDOW_HEIGHT/2+100, OVERALL_WINDOW_WIDTH/2-100, 10);
     */
-    insertAndSetFirstWall(&head, 1,  0 + 15, 0, 10, 1000);
-    insertAndSetFirstWall(&head, 1,  0 + 15, 0 + 10, 610, 10);
-    insertAndSetFirstWall(&head, 2,  0 + 15, 150 + 10, 310, 10);
-    insertAndSetFirstWall(&head, 3,  0 + 15, 250 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 4,  0 + 15, 0 + 10, 10, 160);
-    insertAndSetFirstWall(&head, 5,  0 + 15, 200 + 10, 10, 260);
-    insertAndSetFirstWall(&head, 6,  50 + 15, 150 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 7,  50 + 15, 250 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 8,  100 + 15, 100 + 10, 10, 160);
-    insertAndSetFirstWall(&head, 9,  50 + 15, 50 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 10,  50 + 15, 50 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 11,  100 + 15, 0 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 12,  0 + 15, 350 + 10, 110, 10);
-    insertAndSetFirstWall(&head, 13,  100 + 15, 350 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 14,  100 + 15, 400 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 15,  150 + 15, 350 + 10, 10, 60);
-    //insertAndSetFirstWall(&head, 16,  50 + 15, 400 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 17,  150 + 15, 350 + 10, 210, 10);
-    insertAndSetFirstWall(&head, 18,  250 + 15, 350 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 19,  350 + 15, 350 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 20,  350 + 15, 400 + 10, 160, 10);
-    insertAndSetFirstWall(&head, 21,  500 + 15, 350 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 22,  200 + 15, 400 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 23,  300 + 15, 400 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 24,  100 + 15, 300 + 10, 210, 10);
-    insertAndSetFirstWall(&head, 25,  150 + 15, 250 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 26,  250 + 15, 250 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 27,  300 + 15, 300 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 28,  150 + 15, 50 + 10, 110, 10);
-    insertAndSetFirstWall(&head, 29,  150 + 15, 50 + 10, 10, 110);
-    insertAndSetFirstWall(&head, 30,  200 + 15, 100 + 10, 160, 10);
-    insertAndSetFirstWall(&head, 31,  300 + 15, 50 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 32,  350 + 15, 0 + 10, 10, 110);
-    insertAndSetFirstWall(&head, 33,  400 + 15, 50 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 34,  400 + 15, 50 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 35,  450 + 15, 0 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 36,  150 + 15, 200 + 10, 210, 10);
-    insertAndSetFirstWall(&head, 37,  200 + 15, 200 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 38,  300 + 15, 200 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 39,  300 + 15, 250 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 40,  350 + 15, 250 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 41,  350 + 15, 300 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 42,  400 + 15, 200 + 10, 10, 110);
-    insertAndSetFirstWall(&head, 43,  400 + 15, 200 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 44,  450 + 15, 200 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 45,  450 + 15, 250 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 46,  350 + 15, 150 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 46,  350 + 15, 150 + 10, 210, 10);
-    insertAndSetFirstWall(&head, 47,  450 + 15, 100 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 48,  500 + 15, 50 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 49,  500 + 15, 50 + 10, 10, 160);
-    insertAndSetFirstWall(&head, 50,  500 + 15, 200 + 10, 110, 10);
-    insertAndSetFirstWall(&head, 51,  550 + 15, 200 + 10, 10, 210);
-    insertAndSetFirstWall(&head, 52,  400 + 15, 350 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 53,  450 + 15, 300 + 10, 10, 60);
-    insertAndSetFirstWall(&head, 54,  450 + 15, 300 + 10, 110, 10);
-    insertAndSetFirstWall(&head, 55,  550 + 15, 100 + 10, 60, 10);
-    insertAndSetFirstWall(&head, 56,  600 + 15, 0 + 10, 10, 210);
-    insertAndSetFirstWall(&head, 57,  600 + 15, 250 + 10, 10, 210);
-    insertAndSetFirstWall(&head, 58,  0 + 15, 450 + 10, 610, 10);
+#include "math.h"
+    int i;
+    insertAndSetFirstWall(&head, 12,  640-10-120, 450, 10, 30);
+    insertAndSetFirstWall(&head, 12,  640-10-220, 450, 10, 30);
 
+    for (i = 0; i < 100; i++){
+        insertAndSetFirstWall(&head, i,  640-10-(20 + i) , 350 + i, 10, 10); //1
+        insertAndSetFirstWall(&head, i,  640-10-(20 +100 + i) , 350 + i, 10, 10); //1
+    }
+    insertAndSetFirstWall(&head, 12,  640-10-20, 280, 10, 70);
+    insertAndSetFirstWall(&head, 12,  640-10-120, 280, 10, 70);
+
+    for (i = 0; i < 180; i++){
+        insertAndSetFirstWall(&head, i,  640-10-(20 +190 - i/2) , 100 + i, 10, 10); //1
+    }
+    for (i = 0; i < 105; i++){
+        insertAndSetFirstWall(&head, i,  640-10-(20 +105/2 - i/2) , 175 + i, 10, 10); //1
+    }
+
+
+    insertAndSetFirstWall(&head, 2,  640-105/2-20, 175, 105/2, 10);
+    insertAndSetFirstWall(&head, 2,  640-10-20, 20, 10, 155);
+    insertAndSetFirstWall(&head, 2,  640-300-20, 20, 300, 10);
+    insertAndSetFirstWall(&head, 2,  640-10-320, 20, 10, 60);
+    insertAndSetFirstWall(&head, 2,  640-130-80, 100, 130, 10);
+    insertAndSetFirstWall(&head, 2,  640-10-80, 80, 10, 20);
+    insertAndSetFirstWall(&head, 2,  640-160-80, 80, 160, 10);
+
+
+    double j;
+    for (i = 0; i < 50; i++){
+        j = i;
+        insertAndSetFirstWall(&head, i+1,
+                              // the most important bit is below.
+                              // increase the 20 for a tighter bend
+                              // descrease for a more meandering flow
+                              640-10-(320 + 30*sin(10*j * M_PI/180)),
+                              // increase the 5 for a spacier curve
+                              (i * 5)+80,
+                              10, 10);
+    }
+    for (i = 0; i < 75; i++){
+        j = i;
+        insertAndSetFirstWall(&head, i+1,
+                              // the most important bit is below.
+                              // increase the 20 for a tighter bend
+                              // descrease for a more meandering flow
+                              640-10-(240 + 30*sin(10*j * M_PI/180)),
+                              // increase the 5 for a spacier curve
+                              (i * 5)+80,
+                              10, 10);
+    }
+
+    insertAndSetFirstWall(&head, 2,  640-105-345, 330, 105, 10);
+    insertAndSetFirstWall(&head, 2,  640-10-450, 190, 10, 150);
+    insertAndSetFirstWall(&head, 2,  640-70-380, 190, 70, 10);
+    insertAndSetFirstWall(&head, 2,  640-10-380, 20, 10, 170);
+    insertAndSetFirstWall(&head, 2,  640-260-380, 20, 260, 10);
+
+    insertAndSetFirstWall(&head, 2,  640-345-255, 455, 345, 10);
+    insertAndSetFirstWall(&head, 2,  640-10-600, 100, 10, 365);
+    insertAndSetFirstWall(&head, 2,  640-70-530, 100, 70, 10);
+    insertAndSetFirstWall(&head, 2,  640-10-530, 80, 10, 20);
+    insertAndSetFirstWall(&head, 2,  640-110-530, 80, 110, 10);
 
     setup_robot(&robot);
     updateAllWalls(head, renderer);
@@ -124,7 +127,7 @@ int main(int argc, char *argv[]) {
         robotMotorMove(&robot);
 
         //Check if robot reaches endpoint. and check sensor values
-        if (checkRobotReachedEnd(&robot, OVERALL_WINDOW_WIDTH, OVERALL_WINDOW_HEIGHT/2+100, 10, 100)){
+        if (checkRobotReachedEnd(&robot, 640-10-220, 480, 100, 10)){
             end_time = clock();
             msec = (end_time-start_time) * 1000 / CLOCKS_PER_SEC;
             robotSuccess(&robot, msec);

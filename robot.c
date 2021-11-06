@@ -1,23 +1,21 @@
 #include "robot.h"
 
 void setup_robot(struct Robot *robot){
-    robot->x = 30;
-    robot->y = 180;
-    robot->true_x = 30;
-    robot->true_y = 180;
+
+
+    robot->x = 0;
+    robot->y = 40;
+    robot->true_x = 0;
+    robot->true_y = 40;
     robot->width = ROBOT_WIDTH;
     robot->height = ROBOT_HEIGHT;
     robot->direction = 0;
-    robot->angle = 0;
+    robot->angle = 270;
     robot->currentSpeed = 0;
     robot->crashed = 0;
     robot->auto_mode = 0;
 
-    /* First Algorithm */
-    // robot->history = malloc(0);
-    // robot->arr_size = 0;
-
-    /* Second Algorithm */
+    /* Initializing Variables */
     robot->searchWall = 0;
     robot->ridingWall = 0;
 
@@ -346,7 +344,7 @@ void robotUpdate(struct SDL_Renderer * renderer, struct Robot * robot){
     {
         // xDir = round(robotCentreX+(ROBOT_WIDTH/2-2)*cos((robot->angle+90)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*(i+1))*sin((robot->angle+90)*PI/180));
         // yDir = round(robotCentreY+(ROBOT_WIDTH/2-2)*sin((robot->angle+90)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*(i+1))*cos((robot->angle+90)*PI/180));
-        xDir = round(robotCentreX+cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle)*PI/180));
+        xDir = round(robotCentreX-3+cos((robot->angle)*PI/180)-(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*sin((robot->angle)*PI/180));
         yDir = round(robotCentreY+sin((robot->angle)*PI/180)+(-ROBOT_HEIGHT/2-SENSOR_VISION+sensorSensitivityLength*i)*cos((robot->angle)*PI/180));
 
         xTL = (int) xDir;
@@ -417,44 +415,33 @@ void robotAutoMotorMove(struct Robot * robot, int front_left_sensor, int front_r
     if (robot->ridingWall == 0 && (front_left_sensor || front_mid_sensor))
         robot->direction = LEFT;
     // initial wall found on right
-    if (front_right_sensor || right_sensor)
+    if (front_right_sensor > 1 || right_sensor > 2)
         robot->ridingWall = 1;
 
 
     // tracking right sensor
     if (robot->ridingWall) {
-        if (right_sensor < 3 && front_right_sensor < 2) {
-            if (robot->currentSpeed < 2)
+        if (right_sensor < 2 && front_right_sensor < 2) {
+            if (robot->currentSpeed < 4)
                 robot->direction = UP;
             else
                 robot->direction = RIGHT;
         }
         if (right_sensor >= 3) {
             if (front_left_sensor < 3 && front_right_sensor < 4 && front_mid_sensor < 3) {
-                if (robot->currentSpeed < 3)
+                if (robot->currentSpeed < 4)
                     robot->direction = UP;
             }
         }
     }
 
-    // during navigation: other sensors maintain safety distance of 3 (except right sensor), emergency distance of 4
-    if (front_left_sensor == 3 || front_right_sensor == 3 || front_mid_sensor == 3) {
-        if (robot->currentSpeed < 2)
-            robot->direction = UP;
-        if (robot->currentSpeed > 2)
-            robot->direction = DOWN;
-    }
-
-    if (front_left_sensor == 4 && front_right_sensor < 4)
+    if (front_left_sensor >= 2 && front_right_sensor < 2)
         robot->direction = RIGHT;
 
-    if (front_right_sensor == 3 && front_left_sensor < 2)
+    if (front_right_sensor >= 2 || front_mid_sensor >= 2)
         robot->direction = LEFT;
 
-    if (front_right_sensor == 4 || front_mid_sensor == 4)
-        robot->direction = LEFT;
-
-    if (front_left_sensor == 4 || front_right_sensor == 4 || front_mid_sensor == 4)
+    if (front_left_sensor >=3 || front_right_sensor >= 3 || front_mid_sensor >= 3)
         if (robot->currentSpeed > 0)
             robot->direction = DOWN;
 
